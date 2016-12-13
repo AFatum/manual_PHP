@@ -14,7 +14,7 @@ h1 заголовок первого уровня
 [Любимый сайт](http://football.ua)
 [id]: https://github.com/AFatum/manual_PHP/blob/master/test.md#id
 ---
-[Сюдой] [id]
+[Сюдой](id)
 ---
 * <http://google.com.ua>
 ---
