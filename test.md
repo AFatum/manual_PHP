@@ -80,7 +80,8 @@ index.html      | Индексный файл для проверки вноси
 2. Пункт 2
 3. Пункт 3
 ***
-[1]: ![Ракицкий](http://www.ukrainefootball.net/uploaded/pic/news/1481572140-397.jpg)
+[1]: 
+![Ракицкий](http://www.ukrainefootball.net/uploaded/pic/news/1481572140-397.jpg)
 ***
 
 Первый абзац
