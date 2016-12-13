@@ -24,7 +24,7 @@ h1 заголовок первого уровня
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
-***
+---
 ```php
 <?php here_pagecontent(); ?>
 ```
@@ -34,8 +34,7 @@ h1 заголовок первого уровня
 h1 {
  font-size:1.5em;
  font-weight: 300;
-}
-```
+}```
 ***
 > Текст
 > 
