@@ -34,6 +34,24 @@ h1 заголовок первого уровня
 h1 {
 font-size:1.5em;
 font-weight: 300;}```
+***
+```css */
+@import "bower_components/tree-normalize/generic.normalize";
+h1 {
+font-size:1.5em;
+font-weight: 300;}```
+***
+```scss
+@import "bower_components/tree-normalize/generic.normalize";
+h1 {
+font-size:1.5em;
+font-weight: 300;}```
+***
+> Текст
+> 
+> Продолжение текста выделенного блока
+> Завершение текста
+***
 ---
 Название файла  | Содержание файла
 ----------------|----------------------
