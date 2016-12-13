@@ -15,7 +15,7 @@ h1 заголовок первого уровня
 [id]: https://github.com/AFatum/manual_PHP/blob/master/test.md#id
 ---
 [Сюдой] [id]
-
+---
 * <http://google.com.ua>
 ---
 [пример] [1]
