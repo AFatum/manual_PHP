@@ -11,6 +11,27 @@
     - [КУКИ](#cookie);
     - [header - ХЕДЕРЫ](#header);
     - [БУФЕРИЗАЦИЯ](#ob);
++ Основы, переменные, строки
+    - [phpinfo() — Выводит информацию о текущей конфигурации PHP](#phpinfo);
+    - [ini_get() — Получает значение настройки конфигурации](#ini_get);
+    - [error_reporting() — Задает, какие ошибки PHP попадут в отчет](#error);
+    - [strlen() — Возвращает длину строки](#strlen);
+    - [gettype() — Возвращает тип переменной](#gettype)
++ Сериализация, хеширование и шифрование строк   
+    - [serialize() — Генерирует пригодное для хранения представление переменной](#serialize)
+    - [unserialize() — Создает PHP-значение из хранимого представления](#unserialize);
+    - [password_hash() - Хеширование пароля пользователя](#password_hash);
+    - [password_verify() - проверка хеша пароля](#password_verify);
+    - [password_needs_rehash() - проверка хеша на заданные параметры](#password_needs_rehash);
+    - [password_get_info() - возвращает информацию про хеш](#password_get_info);
+    - [base64_encode() — Кодирует данные алгоритмом MIME base64](#base64_encode);
+    - [base64_decode() — Декодирует данные, закодированные алгоритмом MIME base64](#base64_decode);
+    - [md5() — Возвращает MD5-хэш строки](#md5);
+    - [md5_file() — Возвращает MD5-хэш файла](#md5_file);
+    - [sha1() — Возвращает SHA1-хэш строки](#sha1);
+    - [sha1_file() — Возвращает SHA1-хэш файла](#sha1_file);
+    
+    
 + Массивы и mysqli
     - [Работа с массивами](#array);
     - [array_key_exists() — Проверяет, присутствует ли в массиве указанный ключ или индекс](#exists);
@@ -658,7 +679,269 @@ ob_end_clean();
 ?>
 ```
 ***
-[Массиы на Manual](http://php.net/manual/ru/ref.array.php)
+### <a name="phpinfo"></a> Выводит информацию о текущей конфигурации PHP 
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.phpinfo.php)
+```php
+<?php 
+bool phpinfo ([ int $what = INFO_ALL ] ) ?>
+```
+
+```php
+<?php 
+// phpinfo — Выводит информацию о текущей конфигурации PHP 
+phpinfo();
+
+/* Параметр $what:
+INFO_GENERAL		1 	
+Строка конфигурации, расположение php.ini, дата сборки, Web-сервер, Система и др.
+INFO_CREDITS 		2 	
+Разработчики PHP. См. также phpcredits().
+INFO_CONFIGURATION 	4 	
+Текущие значение основных и локальных PHP директив. См. также ini_get().
+INFO_MODULES 		8 	
+Загруженные модули и их настройки. См. также get_loaded_extensions().
+INFO_ENVIRONMENT 	16 	
+Информация о переменных окружения, которая также доступна в $_ENV.
+INFO_VARIABLES 		32 	
+Выводит все предопределенные переменные из EGPCS (Environment, GET, POST, Cookie, Server).
+INFO_LICENSE 		64 	
+Информация о лицензии PHP. См. также » license FAQ.
+INFO_ALL 			-1 	
+Выводит все приведенное выше. 
+*/
+?>
+```
+***
+### <a name="strlen"></a> strlen() — Возвращает длину строки
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.strlen.php)
+
+```php
+<?php int strlen ( string $string ) ?>
+```
+
+```php
+<?php 
+// strlen — Возвращает длину строки
+strlen($str);  
+?>
+```
+***
+### <a name="gettype"></a> gettype() — Возвращает тип переменной
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.gettype.php)
+
+```php
+<?php string gettype ( mixed $var ) ?>
+```
+
+```php
+<?php 
+//gettype — Возвращает тип переменной
+gettype($value);
+?>
+```
+***
+### <a name="serialize"></a> serialize() — Генерирует пригодное для хранения представление переменной
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.serialize.php)
+
+```php
+<?php string serialize ( mixed $value )?>
+```
+
+```php
+<?php 
+// сериализируем данные
+serialize($session_data);
+serialize($array);
+?>
+```
+***
+### <a name="unserialize"></a> unserialize() — Создает PHP-значение из хранимого представления 
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.unserialize.php)
+
+```php
+<?php mixed unserialize ( string $str )?>
+```
+
+```php
+<?php 
+// рассериализируем данные
+unserialize($session_data);
+unserialize($array);
+?>
+```
+***
+### <a name="password_hash"></a> password_hash() - Хеширование пароля пользователя
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.password-hash.php)
+
+```php
+<?php string password_hash ( string $password , integer $algo [, array $options ] ) ?>
+```
+
+```php
+<?php 
+// стандартное хеширование
+$hash = password_hash($passwod, PASSWORD_DEFAULT);
+// увеличение надежности хеша, значение cost по-умолчанию - 10
+$hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
+// увеличение надежности хеша, добавление своей "соли"
+$options = [
+  'cost' => 11,
+  'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),];
+echo password_hash("rasmuslerdorf", PASSWORD_BCRYPT, $options)."\n";
+?>
+```
+***
+### <a name="password_verify"></a> password_verify() - проверка хеша пароля
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.password-verify.php)
+
+```php
+<?php boolean password_verify ( string $password , string $hash ) ?>
+```
+
+```php
+<?php // стандартное проверка хеша пароля 
+if (password_verify($password, $hash)) 
+{
+  // Success!
+}
+else 
+{
+  // Invalid credentials 
+?>
+```
+***
+### <a name="password_needs_rehash"></a> password_needs_rehash() - проверка хеша на заданные параметры
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.password-needs-rehash.php)
+
+```php
+<?php boolean password_needs_rehash ( string $hash , integer $algo [, array $options ] ) ?>
+```
+
+```php
+<?php
+  // ф-ция используется для повышение уровня безопасности при хешировании
+  // в случае, если старый хеш пароля не соответствует параметрам заданным в аргументе ф-цтт
+  // то можно провести повторное хеширование, используя заданные параметры
+  // использовать ф-ция можно только при автризации пользователя
+  // т.к. только в таком случае есть доступ к нехешированному паролю
+  if (password_needs_rehash($hash, PASSWORD_DEFAULT, ['cost' => 12]))
+    $hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
+?>
+```
+***
+### <a name="password_get_info"></a> password_get_info() - возвращает информацию про хеш
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.password-get-info.php)
+
+```php
+<?php array password_get_info ( string $hash ) ?>
+```
+
+```php
+<?php
+var_dump(password_get_info($hash));
+
+// Результат:
+array(3) {
+  ["algo"]=>
+  int(1)
+  ["algoName"]=>
+  string(6) "bcrypt"
+  ["options"]=>
+  array(1) {
+    ["cost"]=>
+    int(10)
+  }
+})
+ ?>
+```
+***
+### <a name="base64_encode"></a> base64_encode() — Кодирует данные алгоритмом MIME base64
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.base64-encode.php)
+
+```php
+<?php string base64_encode ( string $data ) ?>
+```
+
+```php
+<?php
+$str = 'Строка в кодировке UTF-8';
+echo base64_encode($str);
+// результат: 0KHRgtGA0L7QutCwINCyINC60L7QtNC40YDQvtCy0LrQtSBVVEYtOA
+?>
+```
+***
+### <a name="base64_decode"></a> base64_decode() — Декодирует данные, закодированные алгоритмом MIME base64
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.base64-decode.php)
+
+```php
+<?php string base64_decode ( string $data [, bool $strict = false ] ) ?>
+```
+
+```php
+<?php
+$str = 'VGhpcyBpcyBhbiBlbmNvZGVkIHN0cmluZw==';
+echo base64_decode($str);
+// результат: "This is an encoded string"
+?>
+```
+***
+### <a name="md5"></a> md5 — Возвращает MD5-хэш строки
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.md5.php)
+***
+```php
+<?php string md5 ( string $str [, bool $raw_output = false ] ) ?>
+```
+
+```php
+<?php
+$str = 'яблоко';
+
+if (md5($str) === '1afa148eb41f2e7103f21410bf48346c') {
+  echo "Вам зеленое или красное яблоко?";
+}
+?>
+```
+***
+### <a name="md5_file"></a> md5_file — Возвращает MD5-хэш файла
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.md5-file.php)
+
+```php
+<?php string md5 ( string $str [, bool $raw_output = false ] ) ?>
+```
+
+```php
+<?php
+$file = 'php-5.3.0alpha2-Win32-VC9-x64.zip';
+echo 'MD5-хэш файла ' . $file . ': ' . md5_file($file);
+?>
+```
+***
+### <a name="sha1"></a> sha1 — Возвращает SHA1-хэш строки
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.sha1.php)
+
+```php
+<?php string sha1 ( string $str [, bool $raw_output = false ] ) ?>
+```
+
+```php
+<?php
+$str = 'яблоко';
+                     
+if (sha1($str) === '88b184adea10bf987b15257a5d6c5cb94eba69d3') {
+  echo "Желаете зеленое или красное яблоко?";
+}
+?>
+```
+***
+### <a name="sha1_file"></a> sha1_file — Возвращает SHA1-хэш файла
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/function.sha1-file.php)
+
+```php
+<?php string sha1_file ( string $filename [, bool $raw_output = false ] ) ?>
+```
+
+***
+[Массивы на Manual](http://php.net/manual/ru/ref.array.php)
 ### <a name="array"></a> array() — Создает массив
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.array.php)
 
@@ -721,9 +1004,7 @@ $a = ['a' => 'Авокадо', 'b'=>'Банан', 'c'=>'Во', 'd'=> 'Грейп
 array_key_exists('first', $search_array);
 ?>
 ```
-
 ***
-
 ### <a name="shift"></a> array_shift() — Извлекает первый элемент массива
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.array-shift.php)
 
@@ -743,9 +1024,7 @@ mixed array_shift ( array &$array )
 array_key_exists('first', $search_array);
 ?>
 ```
-
 ***
-
 ### <a name="unshift"></a> array_unshift() — Добавляет один или несколько элементов в начало массива
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.array-unshift.php)
 
@@ -765,9 +1044,7 @@ int array_unshift ( array &$array , mixed $value1 [, mixed $... ] )
 array_unshift($queue, "apple", "raspberry");
 ?>
 ```
-
 ***
-
 ### <a name="count"></a> count() — Подсчитывает количество элементов массива или что-то в объекте
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.count.php)
 
@@ -785,9 +1062,7 @@ int count ( mixed $array_or_countable [, int $mode = COUNT_NORMAL ] )
 count($array);
 ?>
 ```
-
 ***
-
 ### <a name="list"></a> list() — Присваивает переменным из списка значения подобно массиву
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.list.php)
 
@@ -807,9 +1082,7 @@ $info = array('кофе', 'коричневый', 'кофеин');
 list($drink, $color, $power) = $info;
 ?>
 ```
-
 ***
-
 ### <a name="key"></a> key() — Выбирает ключ из массива
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.key.php)
 
@@ -863,7 +1136,6 @@ $mode = reset($transport);   // $mode = 'foot';
 $mode = each($transport);    // $mode = array(0 => 'foot');
 ?>
 ```
-
 ***
 ### <a name="compact"></a> compact() — Создает массив, содержащий названия переменных и их значения
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.compact.php)
@@ -886,7 +1158,6 @@ array compact ( mixed $varname1 [, mixed $... ] )
 	$array = compact('a', 'b', 'c', 'd');
 ?>
 ```
-
 ***
 ### <a name="extract"></a> extract() — Импортирует переменные из массива в текущую таблицу символов
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/function.extract.php)
@@ -938,7 +1209,6 @@ EXTR_REFS
 	array_unique($array);
 ?>
 ```
-
 ***
 ### <a name="fun_file"></a> Функции состояния  
 [Наверх](#Up) | [Manual](http://ua2.php.net/manual/ru/ref.filesystem.php)
