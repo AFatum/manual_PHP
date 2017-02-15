@@ -14,7 +14,7 @@
 
 
 ***
-### <a name="SQLite3"></a> Обобенности
+### <a name="SQLite3"></a> Оcобенности
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/class.sqlite3.php)
 
  + 	Можно так: CREATE TABLE users(id INTEGER, name TEXT, age INTEGER)
