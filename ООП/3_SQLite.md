@@ -24,6 +24,7 @@
 	- id INTEGER PRIMARY KEY AUTOINCREMENT
  + 	Экранирование строк через двойной апостроф: 'Harry O''Brian'
 ***
+
 ### <a name="newSQLite"></a> Создание, открытие и закрытие базы данных БД
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/sqlite3.construct.php)
 
