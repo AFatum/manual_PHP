@@ -3,8 +3,9 @@
 ## Работа с классом SQLite3
 [Manual](http://php.net/manual/ru/class.sqlite3.php)
 
- + [Создание БД](#newSQLite);
- + [Открытие/закрытие БД](#openClose);
+ + [Обобенности](#SQLite3);
+ + [Создание, открытие и закрытие базы данных БД](#newSQLite);
+ + [Выполнение запросов, INSERT, UPDATE, DELETE](#insert);
  + [Экранирование строки](#escape);
  + [INSERT-запросы](#insert);
  + [Отслеживание ошибок, и результат](#error);
@@ -13,31 +14,30 @@
 
 
 ***
-### <a name="newSQLite"></a> Создание БД
+### <a name="SQLite3"></a> Обобенности
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/class.sqlite3.php)
+
+ + 	Можно так: CREATE TABLE users(id INTEGER, name TEXT, age INTEGER)
+ + 	Можно так: CREATE TABLE users(id, name, age)
+ + 	Для задания первичного ключа
+    - id INTEGER PRIMARY KEY
+	- id INTEGER PRIMARY KEY AUTOINCREMENT
+ + 	Экранирование строк через двойной апостроф: 'Harry O''Brian'
+***
+### <a name="newSQLite"></a> Создание, открытие и закрытие базы данных БД
 [Наверх](#Up) | [Manual](http://php.net/manual/ru/sqlite3.construct.php)
 
 ```php
 <?php
 // Создаём или открываем базу данных test.db
 $db = new SQLite3("test.db");
-?>
-```
-***
-### <a name="openClose"></a> Открытие/закрытие БД
-[Наверх](#Up) | [Open](http://php.net/manual/ru/sqlite3.open.php) | [Close](http://php.net/manual/ru/sqlite3.close.php)
 
-
-```php
-<?php
-// Открываем другую БД для работы
-$db->open("another.db");
-?>
-```
-
-```php
-<?php
-// Закрываем базу данных без удаление объекта
+// Закрываем базу данных без удаления объекта
 $db->close();
+
+// Открываем другую базу данных для работы
+$db->open("another.db");
+
 // Удаляем объект
 unset($db);
 ?>
@@ -88,7 +88,7 @@ echo $db->lastErrorMsg();
 ?>
 ```
 ### <a name="prepare"></a> Подготовительные запросы
-[Наверх](#Up) [Manual](http://php.net/manual/ru/sqlite3stmt.bindparam.php) 
+[Наверх](#Up) | [Manual](http://php.net/manual/ru/sqlite3stmt.bindparam.php) 
 
 ```php
 <?php
