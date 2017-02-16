@@ -70,7 +70,7 @@ unset($db);
 <?php
 // Для запросов без выборки данных
 $sql = "INSERT INTO users (name, age)
-          VALUES ('$name', 25)";
+        VALUES ('$name', 25)";
 // Возвращает значение булева типа
 $result = $db->exec($sql);
 ?>
