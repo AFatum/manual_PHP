@@ -73,5 +73,26 @@ print File.read("/comics.txt")
 # копируем файл comics.txt в папку /Home с помощью метода .cp
 # и заносим хендлер в переменную FileUtils
 FileUtils.cp('/comics.txt', '/Home/comics.txt')
-
-
+# Открытие файла в режиме добавления (редактирования) - append
+File.open("/Home/comics.txt", "a") do |f|
+# добавление строки в файл, через конструкцию do...end
+# после слова do указываются действия, которые будут исполняться до слова end
+File.open("/Home/comics.txt", "a") do |f|
+  f << "Cat and Girl: http://catandgirl.com/"
+end
+# отображение времени и даты последнего изменения файла
+File.mtime("/Home/comics.txt") #=> 2017-02-18 20:14:18 UTC
+# возвращает часы/день/месяц/год, во времени последней моддификации файла
+File.mtime("/Home/comics.txt").hour
+File.mtime("/Home/comics.txt").day
+File.mtime("/Home/comics.txt").month
+File.mtime("/Home/comics.txt").year
+# создание своего метода load_comics, с помощью оператора def
+def load_comics(path)
+  comics = {}                   # - создаём пустой ассоциативный массив
+  File.foreach(path) do |line|  # - считываем файл, который передаётся в аргументе метода
+    name, url = line.split(': ')# - объявляем дополнительные переменные и вносим в них данные
+    comics[name] = url.strip    # - вносим данные в основной массив
+  end                           # - завершаем основной foreach для наполнения массива
+  comics                        # - возвращаем итоговый массив
+end                             # - завершаем метод
