@@ -96,3 +96,36 @@ def load_comics(path)
   end                           # - завершаем основной foreach для наполнения массива
   comics                        # - возвращаем итоговый массив
 end                             # - завершаем метод
+
+# - загружаем (подключаем) библиотеки с методами, ф-циями
+require 'popup'
+
+#- библиотека popup содержит много разных методов, вот один из них:
+#- метод .goto позволяет открыть ссылку, указанную в аргументе, в новой вкладке
+Popup.goto "http://bing.com"
+
+# - с помощью метода .make, мы формируем html-код, где h1 - это заголовок, link - это ссылка
+Popup.make {
+  h1 "My Links"
+  link "Go to Bing", "http://bing.com"
+}
+
+# - здесь мы сформировали html-код
+Popup.make do
+  h1 "Things To Do"
+  list do
+    p "Try out Ruby"
+    p "Ride a tiger"
+    p "(down River Euphrates)"
+  end
+end
+
+# - здесь мы формируем список ссылок из уже созданного файла comics.txt, раннее мы его положили в переменную comics = load_comics( '/comics.txt' ).
+Popup.make do
+  h1 "Comics on the Web"        #=> создаём заголовок 
+  list do                       #=> создаём список
+    comics.each do |name, url|  #=> перебираем массив данных
+      link name, url            #=> формируем ссылку с данными из массива
+    end
+  end
+end
